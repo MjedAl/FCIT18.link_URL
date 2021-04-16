@@ -36,7 +36,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY") or flask_secret_key or os.urandom(24)
 login_manager = LoginManager()
 login_manager.init_app(app)
-admin = Admin(app, name='URLs CONTROL', template_mode='bootstrap3', index_view=AdminIndex())
+admin = Admin(app, name='FCIT18.link', template_mode='bootstrap3', index_view=AdminIndex())
 setup_db(app, admin, myModelView)
 captchaPrivateKey = os.getenv('captchaPrivateKey') or captchaPrivateKey
 
@@ -80,7 +80,13 @@ def login():
 @app.route('/')
 def index():
     if current_user.is_authenticated:
-        return redirect('/admin', code=302) 
+        if current_user.role == 'admin':
+            return redirect('/admin', code=302) 
+        else:
+            return jsonify({
+                'success': True,
+                'messsage': 'You are not admin!'
+            })
     else:
         return redirect(url_for('login'))
 
