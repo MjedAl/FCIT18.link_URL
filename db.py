@@ -1,7 +1,6 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, String, Integer, Enum
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,14 +9,11 @@ import string
 import enum
 import json
 
-# from models import Url, User
-
 database_filename = "database.db"
 project_dir = os.path.dirname(os.path.abspath(__file__))
-DATABASE_URL = "sqlite:///{}".format(
-os.path.join(project_dir, database_filename))
 
-# DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL') or "sqlite:///{}".format(
+os.path.join(project_dir, database_filename))
 
 db = SQLAlchemy()
 
