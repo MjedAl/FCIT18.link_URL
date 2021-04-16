@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap-theme.min.css"
+    />
+    <link rel="stylesheet" href="static/assets/css/styles.min.css" />
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcL6KwaAAAAAGsmysmxCBi5X70DkUJmrQESlfMk"></script>
+  </head>
+
+  <body>
+    <div class="login-card">
+      <img class="profile-img-card" src="static/assets/img/avatar_2x.png" />
+      <p class="profile-name-card"></p>
+      <form id="myForm" action="/login" class="form-signin">
+        <span class="reauth-email"> </span>
+        <input
+          class="form-control"
+          type="email"
+          id="inputEmail"
+          required=""
+          placeholder="Email address"
+          autofocus=""
+        />
+        <input
+          class="form-control"
+          type="password"
+          id="inputPassword"
+          required=""
+          placeholder="Password"
+        />
+        <button
+          class="btn btn-primary btn-block btn-lg btn-signin"
+          type="submit"
+        >
+          Log in
+        </button>
+      </form>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script>
+    $(function () {
+      $("#myForm").submit(function (event) {
+        event.preventDefault(); // Prevent the form from submitting via the browser
+        var form = $(this);
+        var email = $("#inputEmail").val();
+        var password = $("#inputPassword").val();
+        grecaptcha.ready(function () {
+          grecaptcha
+            .execute("6LcL6KwaAAAAAGsmysmxCBi5X70DkUJmrQESlfMk", {
+              action: "create_comment",
+            })
+            .then(function (token) {
+              $("#myForm").prepend(
+                '<input type="hidden" name="recaptcha" value="' + token + '">'
+              );
+              $.post(
+                form.attr("action"),
+                { email: email, password: password, token: token },
+                function (result) {
+                  if (!result.success) {
+                    alert(result.message);
+                  } else {
+                    location.reload();
+                  }
+                }
+              );
+            });
+        });
+      });
+    });
+  </script>
+</html>

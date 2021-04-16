@@ -2,3 +2,4 @@ database.db
 /migrations
 /__pycache__
 oldCodes
+secret.py
