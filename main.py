@@ -94,26 +94,22 @@ def login():
             return render_template('login.html')
 
 
-@app.route('/', subdomain="<subdomain>")
-def index(subdomain):
-    print(request)
+@app.route('/')
+def index():
     if current_user.is_authenticated:
-        if current_user.role == 'admin':
-            return redirect('/admin', code=302) 
-        else:
-            return jsonify({
-                'success': True,
-                'messsage': 'You are not admin!'
-            })
+        return redirect('/admin', code=302) 
     else:
-        if subdomain is not None:
-            subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
-            if subdomainO is None:
-                subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
-            return redirect(subdomainO.getFullUrl(), code=302)
-        else:
-            subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
-            return redirect(subdomainO.getFullUrl(), code=302)
+        subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+        return redirect(subdomainO.getFullUrl(), code=302)
+
+@app.route('/', subdomain="<subdomain>")
+def subdomain_index(subdomain):
+    subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
+    if subdomainO is None:
+        subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+    return redirect(subdomainO.getFullUrl(), code=302)
+
+
 
 @app.route('/<code>', methods=['GET'])
 def get_url(code):
@@ -123,16 +119,16 @@ def get_url(code):
     else:
         return redirect(url.getFullUrl(), code=302)
 
-@app.route('/<code>/info', methods=['GET'])
-def get_url_info(code):
-    url = Url.query.filter_by(code=code).first()
-    if url is None:
-        abort(404)
-    else:
-        return jsonify({
-            'Success': True,
-            'Link_info': url.short()
-        })
+# @app.route('/<code>/info', methods=['GET'])
+# def get_url_info(code):
+#     url = Url.query.filter_by(code=code).first()
+#     if url is None:
+#         abort(404)
+#     else:
+#         return jsonify({
+#             'Success': True,
+#             'Link_info': url.short()
+#         })
 
 
 @app.errorhandler(400)
