@@ -94,8 +94,10 @@ def login():
         else:
             return render_template('login.html')
 
-@app.route('/')
-def index():
+
+@app.route('/', subdomain="<subdomain>")
+def index(subdomain):
+    print(request)
     if current_user.is_authenticated:
         if current_user.role == 'admin':
             return redirect('/admin', code=302) 
@@ -105,8 +107,14 @@ def index():
                 'messsage': 'You are not admin!'
             })
     else:
-        subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
-        return redirect(subdomainO.getFullUrl(), code=302)
+        if subdomain is not None:
+            subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
+            if subdomainO is None:
+                subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+            return redirect(subdomainO.getFullUrl(), code=302)
+        else:
+            subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+            return redirect(subdomainO.getFullUrl(), code=302)
 
 @app.route('/<code>', methods=['GET'])
 def get_url(code):
@@ -127,12 +135,6 @@ def get_url_info(code):
             'Link_info': url.short()
         })
 
-@app.route("/", subdomain="<subdomain>")
-def subdomain_index(subdomain):
-    subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
-    if subdomainO is none:
-        subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
-    return redirect(subdomainO.getFullUrl(), code=302)
 
 @app.errorhandler(400)
 def bad_request(error):
