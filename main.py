@@ -129,9 +129,8 @@ def get_url_info(code):
 def subdomain_index(subdomain):
     subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
     if subdomainO is none:
-        abort(404)
-    else:
-        return redirect(subdomainO.getFullUrl(), code=302)
+        subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+    return redirect(subdomainO.getFullUrl(), code=302)
 
 @app.errorhandler(400)
 def bad_request(error):
