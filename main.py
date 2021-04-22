@@ -39,8 +39,7 @@ class myUsersView(ModelView):
 class AdminIndex(AdminIndexView):
     def is_accessible(self):
         if current_user.is_authenticated:
-            if current_user.role == 'admin':
-                return True
+            return True
         return False 
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('index'))
