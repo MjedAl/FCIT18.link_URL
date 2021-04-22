@@ -1,0 +1,10 @@
+Flask
+Flask-SQLAlchemy
+flask_migrate
+psycopg2
+gunicorn
+requests
+Flask-Login
+Flask-Sessionstore
+flask-session-captcha
+Werkzeug
