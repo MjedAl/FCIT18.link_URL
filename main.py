@@ -47,7 +47,7 @@ class AdminIndex(AdminIndexView):
 
 # App configuration
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY") or flask_secret_key or os.urandom(24)
+app.secret_key = (os.environ.get("SECRET_KEY") or flask_secret_key) or os.urandom(24)
 login_manager = LoginManager()
 login_manager.init_app(app)
 admin = Admin(app, name='FCIT18.link', template_mode='bootstrap3', index_view=AdminIndex())
