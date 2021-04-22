@@ -17,10 +17,20 @@ try:
 except ModuleNotFoundError:
     captchaPrivateKey = None
     flask_secret_key = None
-class myModelView(ModelView):
+
+class myAdminView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
             if current_user.role == 'admin':
+                return True
+        return False 
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('index'))
+
+class myUsersView(ModelView):
+    def is_accessible(self):
+        if current_user.is_authenticated:
+            if current_user.role == 'admin' or current_user.role == 'editor':
                 return True
         return False 
     def inaccessible_callback(self, name, **kwargs):
@@ -42,7 +52,7 @@ app.secret_key = os.environ.get("SECRET_KEY") or flask_secret_key or os.urandom(
 login_manager = LoginManager()
 login_manager.init_app(app)
 admin = Admin(app, name='FCIT18.link', template_mode='bootstrap3', index_view=AdminIndex())
-setup_db(app, admin, myModelView)
+setup_db(app, admin, myAdminView, myUsersView)
 captchaPrivateKey = os.getenv('captchaPrivateKey') or captchaPrivateKey
 
 @login_manager.user_loader
@@ -93,7 +103,8 @@ def index():
                 'messsage': 'You are not admin!'
             })
     else:
-        return redirect(url_for('login'))
+        subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+        return redirect(subdomainO.getFullUrl(), code=302)
 
 @app.route('/<code>', methods=['GET'])
 def get_url(code):

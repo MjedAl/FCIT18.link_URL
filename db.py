@@ -21,16 +21,16 @@ if DATABASE_URL.startswith("postgres://"):
 
 db = SQLAlchemy()
 
-def setup_db(app, admin, myModelView):
+def setup_db(app, admin, myAdminView, myUsersView):
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
     Migrate(app, db)
     db.create_all()
-    admin.add_view(myModelView(Url, db.session))
-    admin.add_view(myModelView(User, db.session))
-    admin.add_view(myModelView(Subdomains, db.session))
+    admin.add_view(myUsersView(Url, db.session))
+    admin.add_view(myUsersView(Subdomains, db.session))
+    admin.add_view(myAdminView(User, db.session))
 
 def db_drop_and_create_all():
     db.drop_all()
