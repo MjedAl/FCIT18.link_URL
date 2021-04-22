@@ -88,18 +88,14 @@ def login():
         })
     elif request.method == 'GET':
         if current_user.is_authenticated:
-            return redirect(url_for('index'))
+            return redirect('/admin', code=302) 
         else:
             return render_template('login.html')
 
-
 @app.route('/')
 def index():
-    if current_user.is_authenticated:
-        return redirect('/admin', code=302) 
-    else:
-        subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
-        return redirect(subdomainO.getFullUrl(), code=302)
+    subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+    return redirect(subdomainO.getFullUrl(), code=302)
 
 @app.route('/', subdomain="<subdomain>")
 def subdomain_index(subdomain):
@@ -108,27 +104,14 @@ def subdomain_index(subdomain):
         subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
     return redirect(subdomainO.getFullUrl(), code=302)
 
-
-
 @app.route('/<code>', methods=['GET'])
 def get_url(code):
     url = Url.query.filter_by(code=code).first()
     if url is None:
-        abort(404)
+        subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+        return redirect(subdomainO.getFullUrl(), code=302)
     else:
         return redirect(url.getFullUrl(), code=302)
-
-# @app.route('/<code>/info', methods=['GET'])
-# def get_url_info(code):
-#     url = Url.query.filter_by(code=code).first()
-#     if url is None:
-#         abort(404)
-#     else:
-#         return jsonify({
-#             'Success': True,
-#             'Link_info': url.short()
-#         })
-
 
 @app.errorhandler(400)
 def bad_request(error):
@@ -146,6 +129,5 @@ def not_found(error):
         "message": "Not found"
     }), 404
 
-# app.config['SERVER_NAME'] = 'a-fa.sa'
 port = int(os.environ.get('PORT', 5000))
 app.run(host='0.0.0.0', port=port)
