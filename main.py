@@ -15,8 +15,8 @@ from flask_admin import Admin, AdminIndexView
 try:
     from secret import captchaPrivateKey, flask_secret_key
 except ModuleNotFoundError:
-    pass
-
+    captchaPrivateKey = None
+    flask_secret_key = None
 class myModelView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
