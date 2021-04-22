@@ -151,6 +151,6 @@ def not_found(error):
         "message": "Not found"
     }), 404
 
-app.config['SERVER_NAME'] = '0.0.0.0:'+int(os.environ.get('PORT', 5000))
+app.config['SERVER_NAME'] = 'a-fa.sa'
 port = int(os.environ.get('PORT', 5000))
 app.run(host='0.0.0.0', port=port)
