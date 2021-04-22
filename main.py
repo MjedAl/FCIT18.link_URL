@@ -54,7 +54,7 @@ login_manager.init_app(app)
 admin = Admin(app, name='FCIT18.link', template_mode='bootstrap3', index_view=AdminIndex())
 setup_db(app, admin, myAdminView, myUsersView)
 captchaPrivateKey = os.getenv('captchaPrivateKey') or captchaPrivateKey
-app.config['SERVER_NAME'] = 'a-fa.sa'
+app.config['SERVER_NAME'] = '0.0.0.0:'+int(os.environ.get('PORT', 5000)
 port = int(os.environ.get('PORT', 5000))
 app.run(host='0.0.0.0', port=port)
 @login_manager.user_loader
