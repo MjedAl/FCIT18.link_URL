@@ -15,6 +15,8 @@ project_dir = os.path.dirname(os.path.abspath(__file__))
 DATABASE_URL = os.getenv('DATABASE_URL') or "sqlite:///{}".format(
 os.path.join(project_dir, database_filename))
 
+DATABASE_URL.replace('postgres://','postgresql://')
+
 db = SQLAlchemy()
 
 def setup_db(app, admin, myModelView):
