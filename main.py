@@ -11,7 +11,12 @@ from flask_login import (
 import os
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, AdminIndexView
-from secret import captchaPrivateKey, flask_secret_key
+
+try:
+    from secret import captchaPrivateKey, flask_secret_key
+except ModuleNotFoundError:
+    pass
+
 class myModelView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
