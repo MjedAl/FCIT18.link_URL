@@ -15,7 +15,8 @@ project_dir = os.path.dirname(os.path.abspath(__file__))
 DATABASE_URL = os.getenv('DATABASE_URL') or "sqlite:///{}".format(
 os.path.join(project_dir, database_filename))
 
-DATABASE_URL.replace('postgres://','postgresql://')
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 db = SQLAlchemy()
 
