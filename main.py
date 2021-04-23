@@ -1,6 +1,6 @@
 # Imports
 import json
-from flask import Flask, request, render_template, jsonify, abort, redirect, render_template, url_for, flash
+from flask import Flask, request, render_template, jsonify, abort, redirect, render_template, url_for, flash, send_from_directory
 from db import setup_db, db_drop_and_create_all, User, Url, Subdomains
 import requests
 from flask_login import (
@@ -113,6 +113,11 @@ def get_url(code):
     else:
         return redirect(url.getFullUrl(), code=302)
 
+@app.route('/favicon.ico')
+def f_icon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                          'fcit.jpg',mimetype='image/vnd.microsoft.icon')
+
 @app.errorhandler(400)
 def bad_request(error):
     return jsonify({
@@ -130,4 +135,5 @@ def not_found(error):
     }), 404
 
 port = int(os.environ.get('PORT', 5000))
+app.config['SERVER_NAME'] = 'fcit18.link:'+str(port)
 app.run(host='0.0.0.0', port=port)
