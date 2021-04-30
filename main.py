@@ -18,39 +18,49 @@ except ModuleNotFoundError:
     captchaPrivateKey = None
     flask_secret_key = None
 
+
 class myAdminView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
             if current_user.role == 'admin':
                 return True
-        return False 
+        return False
+
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('index'))
 
+
 class myUsersView(ModelView):
+    column_default_sort = ('clicks', True)
+
     def is_accessible(self):
         if current_user.is_authenticated:
             if current_user.role == 'admin' or current_user.role == 'editor':
                 return True
-        return False 
+        return False
+
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('index'))
+
 
 class AdminIndex(AdminIndexView):
     def is_accessible(self):
         if current_user.is_authenticated:
             return True
-        return False 
+        return False
+
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('index'))
 
 
 # App configuration
 app = Flask(__name__)
-app.secret_key = (os.environ.get("SECRET_KEY") or flask_secret_key) or os.urandom(24)
+app.secret_key = (os.environ.get("SECRET_KEY")
+                  or flask_secret_key) or os.urandom(24)
 login_manager = LoginManager()
 login_manager.init_app(app)
-admin = Admin(app, name='FCIT18.link', template_mode='bootstrap3', index_view=AdminIndex())
+admin = Admin(app, name='FCIT18.link',
+              template_mode='bootstrap3', index_view=AdminIndex())
 setup_db(app, admin, myAdminView, myUsersView)
 captchaPrivateKey = os.getenv('captchaPrivateKey') or captchaPrivateKey
 
@@ -61,11 +71,13 @@ def load_user(user_id):
         return None
     return User.query.get(int(user_id))
 
-@app.route("/login", methods=['POST','GET'])
+
+@app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
         token = request.form['token']
-        checkToken = requests.get('https://www.google.com/recaptcha/api/siteverify?secret='+captchaPrivateKey+'&response='+token+'&remoteip='+request.remote_addr)
+        checkToken = requests.get('https://www.google.com/recaptcha/api/siteverify?secret=' +
+                                  captchaPrivateKey+'&response='+token+'&remoteip='+request.remote_addr)
         if checkToken.json()['success']:
             email = request.form["email"]
             password = request.form["password"]
@@ -78,24 +90,23 @@ def login():
                     })
                 else:
                     login_user(user, remember=True)
-                    return jsonify({
-                        'success': True
-                    })
-                    return redirect('/admin/', code=302)                    
+                    return redirect('/admin/', code=302)
         return jsonify({
             'success': False,
             'message': 'What are you doing?'
         })
     elif request.method == 'GET':
         if current_user.is_authenticated:
-            return redirect('/admin', code=302) 
+            return redirect('/admin', code=302)
         else:
             return render_template('login.html')
+
 
 @app.route('/')
 def index():
     subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
     return redirect(subdomainO.getFullUrl(), code=302)
+
 
 @app.route('/', subdomain="<subdomain>")
 def subdomain_index(subdomain):
@@ -103,6 +114,7 @@ def subdomain_index(subdomain):
     if subdomainO is None:
         subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
     return redirect(subdomainO.getFullUrl(), code=302)
+
 
 @app.route('/<code>', methods=['GET'])
 def get_url(code):
@@ -113,10 +125,12 @@ def get_url(code):
     else:
         return redirect(url.getFullUrl(), code=302)
 
+
 @app.route('/favicon.ico')
 def f_icon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
-                          'fcit.jpg',mimetype='image/vnd.microsoft.icon')
+                               'fcit.jpg', mimetype='image/vnd.microsoft.icon')
+
 
 @app.errorhandler(400)
 def bad_request(error):
@@ -126,6 +140,7 @@ def bad_request(error):
         "message": "Bad request"
     }), 400
 
+
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
@@ -133,6 +148,7 @@ def not_found(error):
         "error": 404,
         "message": "Not found"
     }), 404
+
 
 port = int(os.environ.get('PORT', 5000))
 app.config['SERVER_NAME'] = 'fcit18.link'
