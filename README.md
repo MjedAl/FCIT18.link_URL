@@ -8,7 +8,7 @@ Now multiple authenticated users can edit on the domain, Add new subdomains, qui
 ![Screenshot](/screenshots/2.png)
 
 ## Report
-Other than the flask admin page, there's a reporting dashbaord built with Metabase. It can be viewed @ report.fcit18.link
+Other than the flask admin page, there's a reporting dashbaord built with Metabase. It can be viewed @ http://report.fcit18.link
 
 Built with Flask :)
 
