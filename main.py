@@ -105,6 +105,9 @@ def login():
 @app.route('/')
 def index():
     subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+    sub_Click = subClick(SubdomainID=subdomainO.id,
+                         userAgent=request.headers.get('User-Agent'))
+    sub_Click.insert()
     return redirect(subdomainO.getFullUrl(), code=302)
 
 
