@@ -1,7 +1,7 @@
 # Imports
 import json
 from flask import Flask, request, render_template, jsonify, abort, redirect, render_template, url_for, flash, send_from_directory
-from db import setup_db, db_drop_and_create_all, User, Url, Subdomains
+from db import setup_db, db_drop_and_create_all, User, Url, Subdomains, subClick, urlClick
 import requests
 from flask_login import (
     LoginManager,
@@ -113,6 +113,9 @@ def subdomain_index(subdomain):
     subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
     if subdomainO is None:
         subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+    sub_Click = subClick(SubdomainID=subdomainO.id,
+                         userAgent=request.headers.get('User-Agent'))
+    sub_Click.insert()
     return redirect(subdomainO.getFullUrl(), code=302)
 
 
@@ -123,6 +126,9 @@ def get_url(code):
         subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
         return redirect(subdomainO.getFullUrl(), code=302)
     else:
+        url_Click = urlClick(urlID=url.id,
+                             userAgent=request.headers.get('User-Agent'))
+        url_Click.insert()
         return redirect(url.getFullUrl(), code=302)
 
 
