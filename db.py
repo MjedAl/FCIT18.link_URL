@@ -9,12 +9,11 @@ import random
 import string
 import enum
 import json
+from dotenv import load_dotenv, find_dotenv
 
-database_filename = "database.db"
-project_dir = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(find_dotenv())
 
-DATABASE_URL = os.getenv('DATABASE_URL') or "sqlite:///{}".format(
-    os.path.join(project_dir, database_filename))
+DATABASE_URL = os.getenv('DATABASE_URL')
 
 # https://help.heroku.com/ZKNTJQSK/why-is-sqlalchemy-1-4-x-not-connecting-to-heroku-postgres
 if DATABASE_URL.startswith("postgres://"):

@@ -11,7 +11,9 @@ from flask_login import (
 import os
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, AdminIndexView
+from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv())
 
 class myAdminView(ModelView):
     def is_accessible(self):
