@@ -12,12 +12,6 @@ import os
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, AdminIndexView
 
-try:
-    from secret import captchaPrivateKey, flask_secret_key
-except ModuleNotFoundError:
-    captchaPrivateKey = None
-    flask_secret_key = None
-
 
 class myAdminView(ModelView):
     def is_accessible(self):
@@ -55,14 +49,13 @@ class AdminIndex(AdminIndexView):
 
 # App configuration
 app = Flask(__name__)
-app.secret_key = (os.environ.get("SECRET_KEY")
-                  or flask_secret_key) or os.urandom(24)
+app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 login_manager = LoginManager()
 login_manager.init_app(app)
 admin = Admin(app, name='FCIT18.link',
               template_mode='bootstrap3', index_view=AdminIndex())
 setup_db(app, admin, myAdminView, myUsersView)
-captchaPrivateKey = os.getenv('captchaPrivateKey') or captchaPrivateKey
+captchaPrivateKey = os.environ.get('captchaPrivateKey')
 
 
 @login_manager.user_loader
@@ -90,7 +83,9 @@ def login():
                     })
                 else:
                     login_user(user, remember=True)
-                    return redirect('/admin/', code=302)
+                    return jsonify({
+                        'success': True
+                    })
         return jsonify({
             'success': False,
             'message': 'What are you doing?'
@@ -113,6 +108,8 @@ def index():
 
 @app.route('/', subdomain="<subdomain>")
 def subdomain_index(subdomain):
+    if subdomain.lower() == 'web':
+        return(render_template('index.html'))
     subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
     if subdomainO is None:
         subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
@@ -137,7 +134,7 @@ def get_url(code):
 
 @app.route('/favicon.ico')
 def f_icon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
+    return send_from_directory(os.path.join(app.root_path, 'static/assets/img'),
                                'fcit.jpg', mimetype='image/vnd.microsoft.icon')
 
 
@@ -159,7 +156,7 @@ def not_found(error):
     }), 404
 
 
-port = int(os.environ.get('PORT', 5000))
+# port = int(os.environ.get('PORT', 5000))
 app.config['SERVER_NAME'] = 'fcit18.link'
 # app.config['SERVER_NAME'] = '127.0.0.1:'+str(port)
-app.run(host='0.0.0.0', port=port)
+# app.run(host='0.0.0.0', port=port)

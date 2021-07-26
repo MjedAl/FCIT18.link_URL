@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html style="scroll-behavior: smooth;height: 100%;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>FCIT DRIVE</title>
+    <link rel="icon" type="image/jpeg" sizes="400x400" href="static/assets/img/fcit.jpg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="static/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/styles.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        li>ul>li>a {
+            font-size: 19px;
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+        .list-group-item {
+            background: #121212;
+            border-color: var(--dark);
+        }
+
+        .sectionA {
+            background-color: rgba(0, 0, 0, 0.54);
+            min-height: 100vh;
+        }
+
+        .quickLinks>div {
+            margin-top: 2%;
+        }
+
+        p {
+            margin-bottom: 0px;
+            font-size: 24px;
+        }
+
+        .quickLinks>div>.row {
+            margin-right: 0px;
+            margin-left: 0px;
+            height: 200px;
+            margin-top: 3%;
+        }
+
+        img {
+            width: 100%;
+            height: 70%;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 1;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            top: 100%;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+        .autocomplete-active {
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="static/assets/js/main.js"></script>
+</head>
+
+<body
+    style="background-attachment: fixed;background-repeat: no-repeat;background-position: center center;background-image: url('static/assets/img/fcit_bg.jpg');">
+
+    <div class="sectionA">
+        <!-- Nav -->
+        <nav class="navbar navbar-dark navbar-expand-md animated bounceInDown"
+            style="z-index: 1;background-color: rgba(0,0,0,0.45);">
+            <a class="navbar-brand" href="/index.html" style="margin-left: 5px;">FCIT DRIVE</a>
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+                <span class="sr-only" style="color: #ffffff;">Toggle navigation</span>
+                <span class="navbar-toggler-icon" style="color: #ffffff;"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="navcol-1">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link active" href="http://plans.fcit18.link"
+                            target="_blank">الخطط الدراسية</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="" data-toggle="modal"
+                            data-target="#sched">التقويم الأكاديمي</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#courses">مواد الكلية</a></li>
+                    <li class="nav-item"><a class="nav-link active"
+                            href="https://drive.google.com/open?id=1jOHA0BLoDuoSw0PrVk0XDj4MCxSNQQJn"
+                            target="_blank">المواد الحره</a></li>
+                </ul>
+                <div id="searchCourse" autocomplete="off" class="form-inline my-2 my-lg-0">
+                    <div class="autocomplete">
+                        <input id="myInput" class="form-control mr-sm-2" type="text" placeholder="Search"
+                            aria-label="Search">
+                        <input id="courseLink" class="form-control mr-sm-2" type="hidden">
+                    </div>
+                    <button class="btn btn-outline-dark my-2 my-sm-0 text-white" type="submit"
+                        onclick="goCourse();">Go</button>
+                </div>
+            </div>
+        </nav>
+        <div class="modal fade" id="sched" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" style="max-width: 80%;margin-left:auto;margin-right:auto">
+                <div class="modal-content">
+                    <a class="text-center pt-2" href="static/assets/files/202103.pdf"><button
+                            class="btn btn-outline-dark">Download</button></a>
+                    <img src="static/assets/img/202103.jpg">
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Use-full content -->
+        <div class="container quickLinks text-center">
+
+            <!-- Alerts? -->
+            <!-- <div class="alert alert-success" role="alert">
+                جدول الإختبارات
+            </div> -->
+            <div>
+
+                <h1 class="text-white">:روابط مهمه</h1>
+                <div class="row">
+                    <div class="col">
+                        <a href="https://admission.kau.edu.sa/content.aspx?Site_ID=210&amp;cid=253241" target="_blank"
+                            rel="noopener noreferrer">
+                            <div class='h-100'>
+                                <p>دليل المقررات</p>
+                                <img style="background-image: url('static/assets/img/KAU_logo.png');">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="http://fcit18.link" target="_blank" rel="noopener noreferrer">
+                            <div class='h-100'>
+                                <p>درايف 18</p>
+                                <img style="background-image: url('static/assets/img/drive.png');">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a href="http://lms.kau.edu.sa" target="_blank" rel="noopener noreferrer">
+                            <div class='h-100'>
+                                <p>البلاك بورد</p>
+                                <img style="background-image: url('static/assets/img/bb.png');">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="https://iam.kau.edu.sa/" target="_blank" rel="noopener noreferrer">
+                            <div class='h-100'>
+                                <p>أودس</p>
+                                <img style="background-image: url('static/assets/img/KAU_logo.png');">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div style="padding: 5%;">
+                    <a href="#courses">
+                        <button class="btn btn-dark" type="button" style="font-size: 31px;">مواد الكلية
+                        </button>
+                    </a>
+                </div>
+                <a class="bottom-right" href="https://www.a-fa.sa" target="_blank"
+                    style="color: rgba(255,255,255,0.3);font-size: 22px;">
+                    <div class="animated bounce"><i class="fa fa-user" href="#"></i></div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="courses" style="background-color: rgba(0,0,0,0.54);width: auto;padding-bottom: 100px;">
+        <h1 class="text-center" data-aos="fade" style="z-index: 0;color: rgb(255,255,255);margin-bottom: 10px;">اضغط
+            عالماده ليتم تحويلك</h1>
+        <div style="margin: 3%;">
+            <div class="card">
+                <div class="card-header" style="color: rgb(255,255,255);border-color: var(--dark);background: #121212;">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" id="item-1-1-tab" data-toggle="tab" role="tab"
+                                aria-controls="item-1-1" aria-selected="true" href="#item-1-1">IT</a></li>
+                        <li class="nav-item"><a class="nav-link" id="item-1-2-tab" data-toggle="tab" role="tab"
+                                aria-controls="item-1-2" aria-selected="false" href="#item-1-2">CS</a></li>
+                        <li class="nav-item"><a class="nav-link" id="item-1-3-tab" data-toggle="tab" role="tab"
+                                aria-controls="item-1-3" aria-selected="false" href="#item-1-3">IS</a></li>
+                    </ul>
+                </div>
+                <div class="card-body" style="background: #121212;border-color: #ffffff;color: rgb(255,255,255);">
+                    <div id="nav-tabContent" class="tab-content">
+                        <div id="item-1-1" class="tab-pane fade show active" role="tabpanel"
+                            aria-labelledby="item-1-1-tab">
+                            <h4 class="text-center">IT Courses</h4>
+                            <div>
+                                <div class="row">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الرابع</span>
+                                                <ul>
+                                                    <li><a href="http://isls201.fcit18.link" target="_blank">ISLS201</a>
+                                                    </li>
+                                                    <li><a href="http://arab101.fcit18.link" target="_blank">ARAB101</a>
+                                                    </li>
+                                                    <li><a href="http://CPIT220.fcit18.link" target="_blank">CPIT220</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs203.fcit18.link" target="_blank">CPCS203</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs222.fcit18.link" target="_blank">CPCS222</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الخامس</span>
+                                                <ul>
+                                                    <li><a href="http://cpcs204.fcit18.link" target="_blank">CPCS204</a>
+                                                    </li>
+                                                    <li><a href="http://ISLS301.fcit18.link" target="_blank">ISLS301</a>
+                                                    </li>
+                                                    <li><a href="http://CPIT210.fcit18.link" target="_blank">CPIT210</a>
+                                                    </li>
+                                                    <li><a href="http://ARAB201.fcit18.link" target="_blank">ARAB201</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 1%;">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    السادس</span>
+                                                <ul>
+                                                    <li><a href="http://CPIT240.fcit18.link" target="_blank">CPIT240</a>
+                                                    </li>
+                                                    <li><a href="http://CPIT250.fcit18.link" target="_blank">CPIT250</a>
+                                                    </li>
+                                                    <li><a href="http://CPIT260.fcit18.link" target="_blank">CPIT260</a>
+                                                    </li>
+                                                    <li><a href="http://CPIT285.fcit18.link" target="_blank">CPIT285</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    السابع</span>
+                                                <ul>
+                                                    <li><a href="http://isls401.fcit18.link" target="_blank">ISLS401</a>
+                                                    </li>
+                                                    <li><a href="http://cpit370.fcit18.link" target="_blank">CPIT370</a>
+                                                    </li>
+                                                    <li><a href="http://cpit251.fcit18.link" target="_blank">CPIT251</a>
+                                                    </li>
+                                                    <li><a href="http://cpit280.fcit18.link" target="_blank">CPIT280</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 1%;">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الثامن</span>
+                                                <ul>
+                                                    <li><a href="http://cpit252.fcit18.link" target="_blank">CPIT252</a>
+                                                    </li>
+                                                    <li><a href="http://cpit305.fcit18.link" target="_blank">CPIT305</a>
+                                                    </li>
+                                                    <li><a href="http://cpit380.fcit18.link" target="_blank">CPIT380</a>
+                                                    </li>
+                                                    <li><a href="http://cpis334.fcit18.link" target="_blank">CPIS334</a>
+                                                    </li>
+                                                    <li><a href="http://cpit330.fcit18.link" target="_blank">CPIT330</a>
+                                                    </li>
+                                                    <li><a href="http://cpit425.fcit18.link" target="_blank">CPIT425</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    التاسع</span>
+                                                <ul>
+                                                    <li><a href="http://CPIT345.fcit18.link" target="_blank">CPIT345</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 1%;">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    العاشر</span>
+                                                <ul>
+                                                    <li><a href="http://cpit470.fcit18.link" target="_blank">CPIT470</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="item-1-2" class="tab-pane fade" role="tabpanel" aria-labelledby="item-1-2-tab">
+                            <h4 class="text-center">CS Courses</h4>
+                            <div>
+                                <div class="row">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الرابع</span>
+                                                <ul>
+                                                    <li><a href="http://isls201.fcit18.link" target="_blank">ISLS201</a>
+                                                    </li>
+                                                    <li><a href="http://arab101.fcit18.link" target="_blank">ARAB101</a>
+                                                    </li>
+                                                    <li><a href="http://Math202.fcit18.link" target="_blank">MATH202</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs203.fcit18.link" target="_blank">CPCS203</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs222.fcit18.link" target="_blank">CPCS222</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الخامس</span>
+                                                <ul>
+                                                    <li><a href="http://cpcs204.fcit18.link" target="_blank">CPCS204</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs212.fcit18.link" target="_blank">CPCS212</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs211.fcit18.link" target="_blank">CPCS211</a>
+                                                    </li>
+                                                    <li><a href="http://bio202.fcit18.link" target="_blank">BIO202</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 1%;">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    السادس</span>
+                                                <ul>
+                                                    <li><a href="http://stat352.fcit18.link" target="_blank">STAT352</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs301.fcit18.link" target="_blank">CPCS301</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs241.fcit18.link" target="_blank">CPCS241</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs214.fcit18.link" target="_blank">CPCS214</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs223.fcit18.link" target="_blank">CPCS223</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    السابع</span>
+                                                <ul>
+                                                    <li><a href="http://CPCS324.fcit18.link" target="_blank">CPCS324</a>
+                                                    </li>
+                                                    <li><a href="http://CPCS351.fcit18.link" target="_blank">CPCS351</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS334.fcit18.link" target="_blank">CPIS334</a>
+                                                    </li>
+                                                    <li><a href="http://CPCS361.fcit18.link" target="_blank">CPCS361</a>
+                                                    </li>
+                                                    <li><a href="http://CPCS371.fcit18.link" target="_blank">CPCS371</a>
+                                                    </li>
+                                                    <li><a href="http://CPCS331.fcit18.link" target="_blank">CPCS331</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 1%;">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الثامن</span>
+                                                <ul>
+                                                    <li><a href="http://cpcs302.fcit18.link" target="_blank">CPCS302</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs381.fcit18.link" target="_blank">CPCS381</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs391.fcit18.link" target="_blank">CPCS391</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="item-1-3" class="tab-pane fade" role="tabpanel" aria-labelledby="item-1-3-tab">
+                            <h4 class="text-center">IS Courses</h4>
+                            <div>
+                                <div class="row">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الرابع</span>
+                                                <ul>
+                                                    <li><a href="http://isls201.fcit18.link" target="_blank">ISLS201</a>
+                                                    </li>
+                                                    <li><a href="http://arab101.fcit18.link" target="_blank">ARAB101</a>
+                                                    </li>
+                                                    <li><a href="http://BUS230.fcit18.link" target="_blank">BUS230</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs203.fcit18.link" target="_blank">CPCS203</a>
+                                                    </li>
+                                                    <li><a href="http://cpis220.fcit18.link" target="_blank">CPIS220</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الخامس</span>
+                                                <ul>
+                                                    <li><a href="http://cpcs204.fcit18.link" target="_blank">CPCS204</a>
+                                                    </li>
+                                                    <li><a href="http://cpcs222.fcit18.link" target="_blank">CPCS222</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS210.fcit18.link" target="_blank">CPIS210</a>
+                                                    </li>
+                                                    <li><a href="http://BUS232.fcit18.link" target="_blank">BUS232</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 1%;">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    السادس</span>
+                                                <ul>
+                                                    <li><a href="http://CPIS222.fcit18.link" target="_blank">CPIS222</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS240.fcit18.link" target="_blank">CPIS240</a>
+                                                    </li>
+                                                    <li><a href="http://cpis334.fcit18.link" target="_blank">CPIS334</a>
+                                                    </li>
+                                                    <li><a href="http://BUS233.fcit18.link" target="_blank">BUS233</a>
+                                                    </li>
+                                                    <li><a href="http://CIPS250.fcit18.link" target="_blank">CIPS250</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS370.fcit18.link" target="_blank">CPIS370</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    السابع</span>
+                                                <ul>
+                                                    <li><a href="http://CPIS351.fcit18.link" target="_blank">CPIS351</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS354.fcit18.link" target="_blank">CPIS354</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS358.fcit18.link" target="_blank">CPIS358</a>
+                                                    </li>
+                                                    <li><a href="http://ACT333.fcit18.link" target="_blank">ACT333</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 1%;">
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    الثامن</span>
+                                                <ul>
+                                                    <li><a href="http://CPIS312.fcit18.link" target="_blank">CPIS312</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS352.fcit18.link" target="_blank">CPIS352</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS380.fcit18.link" target="_blank">CPIS380</a>
+                                                    </li>
+                                                    <li><a href="http://ARAB201.fcit18.link" target="_blank">ARAB201</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><span style="font-size: 24px;">الترم
+                                                    التاسع</span>
+                                                <ul>
+                                                    <li><a href="http://CPIS342.fcit18.link" target="_blank">CPIS342</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS420.fcit18.link" target="_blank">CPIS420</a>
+                                                    </li>
+                                                    <li><a href="http://CPIS428.fcit18.link" target="_blank">CPIS428</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <Script>
+                            $('.nav-item').on('click', function (e) {
+                                if (e.target.id != "") {
+                                    localStorage.setItem('dep', e.target.id);
+                                }
+                            });
+                        </Script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+</body>
+
+</html>
