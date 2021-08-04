@@ -114,6 +114,7 @@ def index():
 def subdomain_index(subdomain):
     if subdomain.lower() == 'web':
         subdomainO = Subdomains.query.filter_by(code='web').one_or_none()
+        subdomainO.incrementCounter()
         sub_Click = subClick(SubdomainID=subdomainO.id,
                              userAgent=request.headers.get('User-Agent'))
         sub_Click.insert()
