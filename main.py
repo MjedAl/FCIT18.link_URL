@@ -15,6 +15,7 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
+
 class myAdminView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
@@ -51,6 +52,7 @@ class AdminIndex(AdminIndexView):
 
 # App configuration
 app = Flask(__name__)
+app.config['SERVER_NAME'] = 'fcit18.link'
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -111,6 +113,10 @@ def index():
 @app.route('/', subdomain="<subdomain>")
 def subdomain_index(subdomain):
     if subdomain.lower() == 'web':
+        subdomainO = Subdomains.query.filter_by(code='web').one_or_none()
+        sub_Click = subClick(SubdomainID=subdomainO.id,
+                             userAgent=request.headers.get('User-Agent'))
+        sub_Click.insert()
         return(render_template('index.html'))
     subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
     if subdomainO is None:
@@ -156,9 +162,3 @@ def not_found(error):
         "error": 404,
         "message": "Not found"
     }), 404
-
-
-# port = int(os.environ.get('PORT', 5000))
-app.config['SERVER_NAME'] = 'fcit18.link'
-# app.config['SERVER_NAME'] = '127.0.0.1:'+str(port)
-# app.run(host='0.0.0.0', port=port)
