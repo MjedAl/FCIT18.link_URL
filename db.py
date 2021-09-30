@@ -182,7 +182,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String())
     email = db.Column(db.String())
     role = db.Column(db.String())
-    lastLogin = db.Column(db.DateTime, default=datetime.utcnow)
+    lastSeen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def short(self):
         return {
