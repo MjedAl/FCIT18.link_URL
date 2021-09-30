@@ -139,9 +139,10 @@ class Subdomains(db.Model):
 
 class subClick(db.Model):
     id = Column(Integer, primary_key=True)
-    SubdomainID = db.Column(db.Integer, db.ForeignKey('subdomains.id'))
     userAgent = db.Column(db.String)
-    time = db.Column(db.DateTime, default=datetime.utcnow)
+    ip = db.Column(db.String)
+    SubdomainID = db.Column(db.Integer, db.ForeignKey('subdomains.id'), nullable=False)
+    time = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     def insert(self):
         db.session.add(self)
@@ -158,8 +159,9 @@ class subClick(db.Model):
 class urlClick(db.Model):
     id = Column(Integer, primary_key=True)
     userAgent = db.Column(db.String)
-    urlID = db.Column(db.Integer, db.ForeignKey('url.id'))
-    time = db.Column(db.DateTime, default=datetime.utcnow)
+    ip = db.Column(db.String)
+    urlID = db.Column(db.Integer, db.ForeignKey('url.id'), nullable=False)
+    time = db.Column(db.DateTime, default=datetime.utcnow , nullable=False)
 
     def insert(self):
         db.session.add(self)
@@ -180,6 +182,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String())
     email = db.Column(db.String())
     role = db.Column(db.String())
+    lastLogin = db.Column(db.DateTime, default=datetime.utcnow)
 
     def short(self):
         return {
