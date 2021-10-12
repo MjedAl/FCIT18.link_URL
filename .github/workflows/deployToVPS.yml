@@ -19,6 +19,7 @@ jobs:
         script: |
           sudo su root
           cd /home/root/dev/fcit18Link/FCIT18.link_URL/
+          git reset -- hard
           sudo git pull origin main
           sudo python3 -m venv env
           source env/bin/activate
