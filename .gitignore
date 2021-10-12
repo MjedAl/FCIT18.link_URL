@@ -4,3 +4,4 @@ database.db
 oldCodes
 secret.py
 .env
+env
