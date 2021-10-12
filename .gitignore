@@ -3,5 +3,5 @@ database.db
 /__pycache__
 oldCodes
 secret.py
-/env
 .env
+env
