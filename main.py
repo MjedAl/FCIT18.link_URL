@@ -12,6 +12,7 @@ import os
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, AdminIndexView
 from dotenv import load_dotenv, find_dotenv
+from datetime import datetime
 
 load_dotenv(find_dotenv())
 
@@ -68,13 +69,20 @@ def load_user(user_id):
         return None
     return User.query.get(int(user_id))
 
+@app.before_request
+def update_last_seen():
+    if current_user.is_authenticated:
+        current_user.lastSeen = datetime.utcnow()
+        current_user.update()
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
         token = request.form['token']
+        headers_list = request.headers.getlist("X-Forwarded-For")
+        user_ip = headers_list[0] if headers_list else request.remote_addr
         checkToken = requests.get('https://www.google.com/recaptcha/api/siteverify?secret=' +
-                                  captchaPrivateKey+'&response='+token+'&remoteip='+request.remote_addr)
+                                  captchaPrivateKey+'&response='+token+'&remoteip='+user_ip)
         if checkToken.json()['success']:
             email = request.form["email"]
             password = request.form["password"]
@@ -104,39 +112,45 @@ def login():
 @app.route('/')
 def index():
     subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
+    headers_list = request.headers.getlist("X-Forwarded-For")
+    user_ip = headers_list[0] if headers_list else request.remote_addr
     sub_Click = subClick(SubdomainID=subdomainO.id,
-                         userAgent=request.headers.get('User-Agent'))
+                         userAgent=request.headers.get('User-Agent'), ip = user_ip)
     sub_Click.insert()
     return redirect(subdomainO.getFullUrl(), code=302)
 
 
 @app.route('/', subdomain="<subdomain>")
 def subdomain_index(subdomain):
+    headers_list = request.headers.getlist("X-Forwarded-For")
+    user_ip = headers_list[0] if headers_list else request.remote_addr
     if subdomain.lower() == 'web':
         subdomainO = Subdomains.query.filter_by(code='web').one_or_none()
         subdomainO.incrementCounter()
         sub_Click = subClick(SubdomainID=subdomainO.id,
-                             userAgent=request.headers.get('User-Agent'))
+                             userAgent=request.headers.get('User-Agent'), ip = user_ip)
         sub_Click.insert()
         return(render_template('index.html'))
     subdomainO = Subdomains.query.filter_by(code=subdomain).one_or_none()
     if subdomainO is None:
         subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
     sub_Click = subClick(SubdomainID=subdomainO.id,
-                         userAgent=request.headers.get('User-Agent'))
+                         userAgent=request.headers.get('User-Agent'), ip = user_ip)
     sub_Click.insert()
     return redirect(subdomainO.getFullUrl(), code=302)
 
 
 @app.route('/<code>', methods=['GET'])
 def get_url(code):
+    headers_list = request.headers.getlist("X-Forwarded-For")
+    user_ip = headers_list[0] if headers_list else request.remote_addr
     url = Url.query.filter_by(code=code).first()
     if url is None:
         subdomainO = Subdomains.query.filter_by(code='@').one_or_none()
         return redirect(subdomainO.getFullUrl(), code=302)
     else:
         url_Click = urlClick(urlID=url.id,
-                             userAgent=request.headers.get('User-Agent'))
+                             userAgent=request.headers.get('User-Agent'), ip = user_ip)
         url_Click.insert()
         return redirect(url.getFullUrl(), code=302)
 
