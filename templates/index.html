@@ -76,7 +76,7 @@
             color: #ffffff;
         }
 
-        #btn-download {
+        .downloadBtn {
             cursor: pointer;
             display: block;
             width: 48px;
@@ -85,18 +85,18 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        #btn-download:hover {
+        .downloadBtn:hover {
             background: rgba(34, 50, 84, 0.03);
         }
 
-        #btn-download svg {
+        .downloadBtn svg {
             margin: 16px 0 0 16px;
             fill: none;
             transform: translate3d(0, 0, 0);
         }
 
-        #btn-download svg polyline,
-        #btn-download svg path {
+        .downloadBtn svg polyline,
+        .downloadBtn svg path {
             stroke: #0077FF;
             stroke-width: 2;
             stroke-linecap: round;
@@ -105,19 +105,19 @@
             transition-delay: 0.3s;
         }
 
-        #btn-download svg path#check {
+        .downloadBtn svg path#check {
             stroke-dasharray: 38;
             stroke-dashoffset: 114;
             transition: all 0.4s ease;
         }
 
-        #btn-download.downloaded svg .svg-out {
+        .downloadBtn.downloaded svg .svg-out {
             opacity: 0;
             animation: drop 0.3s linear;
             transition-delay: 0.4s;
         }
 
-        #btn-download.downloaded svg path#check {
+        .downloadBtn.downloaded svg path#check {
             stroke: #20CCA5;
             stroke-dashoffset: 174;
             transition-delay: 0.4s;
@@ -179,7 +179,7 @@
             <div class="modal-dialog modal-lg" style="max-width: 80%;margin-left:auto;margin-right:auto">
                 <div class="modal-content">
 
-                    <div id="btn-download">
+                    <div id="btn-download" class='downloadBtn'>
                         <svg width="32px" height="32px" viewBox="0 0 22 16">
                             <path
                                 d="M2,10 L6,13 L12.8760559,4.5959317 C14.1180021,3.0779974 16.2457925,2.62289624 18,3.5 L18,3.5 C19.8385982,4.4192991 21,6.29848669 21,8.35410197 L21,10 C21,12.7614237 18.7614237,15 16,15 L1,15"
@@ -206,7 +206,7 @@
                     <img src="static/assets/img/202201-2.jpg">
                     <img src="static/assets/img/202201-3.jpg">
 
-                    <div id="btn-download2">
+                    <div id="btn-download2" class='downloadBtn'>
                         <svg width="32px" height="32px" viewBox="0 0 22 16">
                             <path
                                 d="M2,10 L6,13 L12.8760559,4.5959317 C14.1180021,3.0779974 16.2457925,2.62289624 18,3.5 L18,3.5 C19.8385982,4.4192991 21,6.29848669 21,8.35410197 L21,10 C21,12.7614237 18.7614237,15 16,15 L1,15"
